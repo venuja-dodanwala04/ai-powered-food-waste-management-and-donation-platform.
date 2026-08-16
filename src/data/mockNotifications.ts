@@ -1,0 +1,48 @@
+import { Notification } from '../types';
+
+export const MOCK_NOTIFICATIONS: Notification[] = [
+  {
+    id: 'notif_1',
+    userId: 'usr_business_1',
+    title: 'Food Expires Tomorrow',
+    message: 'Chicken Curry (15.0 kg) expires in 18 hours. Post for donation now?',
+    type: 'EXPIRY',
+    isRead: false,
+    actionUrl: '/business/donations',
+    actionLabel: 'Donate Now',
+    createdAt: '2026-07-19T09:30:00Z',
+  },
+  {
+    id: 'notif_2',
+    userId: 'usr_business_1',
+    title: 'AI Prediction Ready',
+    message: "Tomorrow's sales forecast ready: Recommend preparing 48.5 kg Rice, 18.5 kg Chicken.",
+    type: 'FORECAST',
+    isRead: false,
+    actionUrl: '/business/forecast',
+    actionLabel: 'View Forecast',
+    createdAt: '2026-07-19T06:00:00Z',
+  },
+  {
+    id: 'notif_3',
+    userId: 'usr_business_1',
+    title: 'Charity Requested Donation',
+    message: 'Hope Food Bank requested 15.0 kg Chicken Curry & Steamed Rice.',
+    type: 'DONATION_REQUEST',
+    isRead: false,
+    actionUrl: '/business/donation-requests',
+    actionLabel: 'Review Request',
+    createdAt: '2026-07-19T15:10:00Z',
+  },
+  {
+    id: 'notif_4',
+    userId: 'usr_business_1',
+    title: 'System Optimization Notice',
+    message: 'Monthly Food Waste Reduction achieved 24.8% improvement vs last month.',
+    type: 'SYSTEM',
+    isRead: true,
+    actionUrl: '/business/reports',
+    actionLabel: 'View Report',
+    createdAt: '2026-07-18T18:00:00Z',
+  },
+];

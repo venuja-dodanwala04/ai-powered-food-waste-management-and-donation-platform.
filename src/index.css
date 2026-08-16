@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 5 5 31;
+    --color-surface: 16 20 45;
+    --color-card: 27 31 59;
+    --color-green: 22 232 117;
+    --color-blue: 59 130 246;
+  }
+
+  body {
+    background-color: #05051F;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Inter', sans-serif;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0D24;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2F54;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #383E6E;
+}
+
+/* Custom Card & Glass Utilities */
+.eco-card {
+  background: #1B1F3B;
+  border: 1px solid #2A2F54;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.2s ease-in-out;
+}
+
+.eco-card:hover {
+  border-color: #383E6E;
+}
+
+.eco-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.45);
+  border-color: rgba(22, 232, 117, 0.3);
+}
+
+.eco-glow-green {
+  box-shadow: 0 0 20px rgba(22, 232, 117, 0.2);
+}
+
+.eco-glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Linear Gradient Backgrounds matching designs */
+.bg-eco-gradient-sidebar {
+  background: linear-gradient(180deg, #0A0D24 0%, #061D12 100%);
+}
+
+.bg-eco-gradient-hero {
+  background: radial-gradient(circle at 50% 20%, rgba(22, 232, 117, 0.12) 0%, rgba(5, 5, 31, 1) 70%);
+}
+
+.bg-eco-gradient-accent {
+  background: linear-gradient(135deg, rgba(22, 232, 117, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
+}
