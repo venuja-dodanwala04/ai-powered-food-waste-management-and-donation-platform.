@@ -1,0 +1,340 @@
+[{
+  "_id": "FOR000001",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD008",
+  "food_name": "Laksa",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 369,
+  "predicted_demand": 361,
+  "recommended_preparation": 361,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000002",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 119,
+  "predicted_demand": 105,
+  "recommended_preparation": 105,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000003",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD001",
+  "food_name": "Beef Rendang",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 50,
+  "predicted_demand": 36,
+  "recommended_preparation": 36,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000004",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD011",
+  "food_name": "Roti Canai",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 515,
+  "predicted_demand": 503,
+  "recommended_preparation": 503,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000005",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 274,
+  "predicted_demand": 262,
+  "recommended_preparation": 262,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000006",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD002",
+  "food_name": "Cendol",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 415,
+  "predicted_demand": 409,
+  "recommended_preparation": 409,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000007",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 89,
+  "predicted_demand": 76,
+  "recommended_preparation": 76,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000008",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD003",
+  "food_name": "Char Kway Teow",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 248,
+  "predicted_demand": 236,
+  "recommended_preparation": 236,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000009",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD013",
+  "food_name": "Tandoori Chicken",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 190,
+  "predicted_demand": 176,
+  "recommended_preparation": 176,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000010",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 251,
+  "predicted_demand": 237,
+  "recommended_preparation": 237,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000011",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD007",
+  "food_name": "Kaya Toast Set",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 354,
+  "predicted_demand": 347,
+  "recommended_preparation": 347,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000012",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD004",
+  "food_name": "Chicken Chop",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 283,
+  "predicted_demand": 270,
+  "recommended_preparation": 270,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000013",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD002",
+  "food_name": "Cendol",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 289,
+  "predicted_demand": 278,
+  "recommended_preparation": 278,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000014",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD011",
+  "food_name": "Roti Canai",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 858,
+  "predicted_demand": 847,
+  "recommended_preparation": 847,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000015",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD005",
+  "food_name": "Chicken Rice",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 351,
+  "predicted_demand": 344,
+  "recommended_preparation": 344,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000016",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD014",
+  "food_name": "Teh Tarik",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 425,
+  "predicted_demand": 412,
+  "recommended_preparation": 412,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000017",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD006",
+  "food_name": "Iced Lemon Tea",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 719,
+  "predicted_demand": 714,
+  "recommended_preparation": 714,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000018",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD006",
+  "food_name": "Iced Lemon Tea",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 655,
+  "predicted_demand": 649,
+  "recommended_preparation": 649,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000019",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD007",
+  "food_name": "Kaya Toast Set",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 642,
+  "predicted_demand": 625,
+  "recommended_preparation": 625,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "FOR000020",
+  "user_id": "USR000001",
+  "food_item_id": "FOOD010",
+  "food_name": "Nasi Lemak",
+  "forecast_date": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  },
+  "current_stock": 321,
+  "predicted_demand": 315,
+  "recommended_preparation": 315,
+  "unit": "kg",
+  "model": "Historical Sales Baseline (Prophet-ready)",
+  "generated_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+}]

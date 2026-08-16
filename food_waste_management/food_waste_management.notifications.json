@@ -1,0 +1,240 @@
+[{
+  "_id": "NOT000001",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Laksa are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000002",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Spaghetti Carbonara are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000003",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Roti Canai are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000004",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Spaghetti Carbonara are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000005",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Char Kway Teow are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000006",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Tandoori Chicken are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000007",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Kaya Toast Set are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000008",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Chicken Chop are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000009",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Cendol are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000010",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "1.0 kg of Roti Canai are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000011",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "1.0 kg of Chicken Rice are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000012",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Teh Tarik are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000013",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "1.0 kg of Iced Lemon Tea are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000014",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Iced Lemon Tea are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000015",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Kaya Toast Set are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000016",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Kaya Toast Set are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000017",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Mushroom Soup are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000018",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "2.0 kg of Spaghetti Carbonara are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-01T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000019",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Chicken Chop are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": "NOT000020",
+  "user_id": "USR000001",
+  "title": "Donation request pending",
+  "message": "3.0 kg of Kaya Toast Set are available for charity confirmation.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "created_at": {
+    "$date": "2024-01-02T00:00:00.000Z"
+  }
+}]

@@ -1,0 +1,2 @@
+"""EcoKitchen AI FastAPI application."""
+
