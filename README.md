@@ -2,7 +2,7 @@
 
 FastAPI and MongoDB API foundation for food inventory, sales, waste tracking, demand forecasts, donations, notifications, reports, and charity discovery.
 
-## Run locally
+## Run backend locally
 
 1. Create a virtual environment: `python -m venv .venv`
 2. Activate it in PowerShell: `.\.venv\Scripts\Activate.ps1`
@@ -11,6 +11,11 @@ FastAPI and MongoDB API foundation for food inventory, sales, waste tracking, de
 5. Start MongoDB, then run: `uvicorn app.main:app --reload`
 
 The interactive API documentation is available at `http://127.0.0.1:8000/docs` and OpenAPI JSON at `/openapi.json`.
+
+
+## Run Frontend
+
+1. Run `npm run dev` in folder
 
 ## API areas
 
