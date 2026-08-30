@@ -1,53 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BarChart3,
   Download,
-  Calendar,
   DollarSign,
   Leaf,
   HeartHandshake,
   TrendingDown,
-  Users,
   Award,
 } from 'lucide-react';
 import { PageHeader } from '../../components/common/PageHeader';
 import { StatCard } from '../../components/common/StatCard';
-import { SalesForecastChart } from '../../components/charts/SalesForecastChart';
 import { WasteReasonChart } from '../../components/charts/WasteReasonChart';
 import { WeeklyLossChart } from '../../components/charts/WeeklyLossChart';
-import { reportsService } from '../../services/reportsService';
+import { reportsService, ReportSummary } from '../../services/reportsService';
+import { wasteService } from '../../services/wasteService';
 
 export const ReportsPage: React.FC = () => {
   const [dateRange, setDateRange] = useState('30 Days');
-  const metrics = reportsService.getSummaryMetrics(dateRange);
+  const [metrics, setMetrics] = useState<ReportSummary | null>(null);
+  const [wasteReasonData, setWasteReasonData] = useState<Array<{ name: string; value: number; color: string }>>([]);
+  const [weeklyLossData, setWeeklyLossData] = useState<Array<{ day: string; loss: number }>>([]);
+  const [topItems, setTopItems] = useState<Array<{ foodName: string; quantity: number; financialLoss: number; primaryReason: string }>>([]);
+
+  useEffect(() => {
+    reportsService.getSummaryMetrics(dateRange).then(setMetrics).catch(console.error);
+  }, [dateRange]);
+
+  useEffect(() => {
+    wasteService.getReasonsChartData().then(setWasteReasonData).catch(console.error);
+    wasteService.getWeeklyLossChartData().then(setWeeklyLossData).catch(console.error);
+    wasteService.getTopWastedItems().then(setTopItems).catch(console.error);
+  }, []);
 
   const handleExport = () => {
-    reportsService.exportCSVReport();
+    reportsService.exportCSVReport().catch(console.error);
   };
 
-  const salesVsForecastData = [
-    { day: 'Week 1', actualSales: 1120, aiPredicted: 1100 },
-    { day: 'Week 2', actualSales: 1250, aiPredicted: 1240 },
-    { day: 'Week 3', actualSales: 1180, aiPredicted: 1195 },
-    { day: 'Week 4', actualSales: 1300, aiPredicted: 1290 },
-  ];
-
-  const wasteReasonData = [
-    { name: 'Spoilage (Expired)', value: 55.4, color: '#EF4444' },
-    { name: 'Overproduction', value: 24.6, color: '#F59E0B' },
-    { name: 'Preparation Waste', value: 12.0, color: '#3B82F6' },
-    { name: 'Storage Failure', value: 8.0, color: '#8B5CF6' },
-  ];
-
-  const weeklyLossData = [
-    { day: 'Mon', loss: 12400 },
-    { day: 'Tue', loss: 9800 },
-    { day: 'Wed', loss: 15200 },
-    { day: 'Thu', loss: 11000 },
-    { day: 'Fri', loss: 8400 },
-    { day: 'Sat', loss: 14500 },
-    { day: 'Sun', loss: 16800 },
-  ];
+  const m = metrics;
 
   return (
     <div className="space-y-6">
@@ -57,7 +46,7 @@ export const ReportsPage: React.FC = () => {
         actions={
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 bg-eco-surface border border-eco-border rounded-xl p-1 text-xs">
-              {['Today', '7 Days', '30 Days', '3 Months'].map((range) => (
+              {['7 Days', '30 Days', '3 Months'].map((range) => (
                 <button
                   key={range}
                   onClick={() => setDateRange(range)}
@@ -85,17 +74,17 @@ export const ReportsPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Food Wasted"
-          value={`${metrics.totalWasteKg} kg`}
-          trend={`-${metrics.wasteReductionPercent}% Waste Reduction`}
-          trendDirection="up"
+          value={`${m ? m.totalWasteKg : 0} kg`}
+          trend={m ? `${m.wasteReductionPercent >= 0 ? '-' : '+'}${Math.abs(m.wasteReductionPercent)}% vs previous period` : '—'}
+          trendDirection={m && m.wasteReductionPercent >= 0 ? 'up' : 'down'}
           subtitle="Landfill diversion"
           icon={TrendingDown}
           accentColor="danger"
         />
         <StatCard
           title="Food Donated"
-          value={`${metrics.foodDonatedKg} kg`}
-          trend={`${metrics.mealsDonated} Meals Provided`}
+          value={`${m ? m.foodDonatedKg : 0} kg`}
+          trend={m ? `${m.mealsDonated} meals provided` : '—'}
           trendDirection="up"
           subtitle="Community impact"
           icon={HeartHandshake}
@@ -103,7 +92,7 @@ export const ReportsPage: React.FC = () => {
         />
         <StatCard
           title="Financial Savings"
-          value={`LKR ${metrics.estimatedFinancialSavingsLKR.toLocaleString()}`}
+          value={`LKR ${(m ? m.estimatedFinancialSavingsLKR : 0).toLocaleString()}`}
           trend="Prevented loss valuation"
           trendDirection="up"
           subtitle="Sri Lankan Rupees"
@@ -112,8 +101,8 @@ export const ReportsPage: React.FC = () => {
         />
         <StatCard
           title="Est. CO₂ Saved"
-          value={`${metrics.co2SavedKg} kg`}
-          trend={`${metrics.donationBeneficiaries} Beneficiaries`}
+          value={`${m ? m.co2SavedKg : 0} kg`}
+          trend={m ? `${m.donationBeneficiaries} beneficiaries` : '—'}
           trendDirection="up"
           subtitle="Environmental footprint"
           icon={Leaf}
@@ -121,48 +110,45 @@ export const ReportsPage: React.FC = () => {
         />
       </div>
 
-      {/* ENVIRONMENTAL / SUSTAINABILITY IMPACT BANNER */}
+      {/* SUSTAINABILITY BANNER */}
       <div className="eco-card p-6 bg-eco-gradient-accent border-eco-green/40 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="p-3.5 rounded-2xl bg-eco-green/20 text-eco-green border border-eco-green/40 shadow-glow-green">
             <Award className="w-8 h-8" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-white font-outfit">
-              Sustainability Milestone — Eco Champion Award
-            </h3>
+            <h3 className="text-lg font-bold text-white font-outfit">Sustainability Impact</h3>
             <p className="text-xs text-eco-muted mt-0.5">
-              Grand Colombo prevented <strong>1,050 kg CO₂ equivalent greenhouse gas emissions</strong> this month through AI demand matching.
+              Rescued <strong>{m ? m.foodDonatedKg : 0} kg</strong> of surplus food, avoiding an estimated{' '}
+              <strong>{m ? m.co2SavedKg : 0} kg CO₂e</strong> over the selected period.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-6 text-center border-t md:border-t-0 md:border-l border-eco-border/40 pt-4 md:pt-0 md:pl-6 shrink-0">
           <div>
-            <span className="text-xl font-extrabold text-eco-green font-outfit">{metrics.mealsDonated}</span>
+            <span className="text-xl font-extrabold text-eco-green font-outfit">{m ? m.mealsDonated : 0}</span>
             <span className="block text-[10px] text-eco-muted uppercase font-semibold">Meals Donated</span>
           </div>
           <div>
-            <span className="text-xl font-extrabold text-eco-blue font-outfit">{metrics.donationBeneficiaries}</span>
-            <span className="block text-[10px] text-eco-muted uppercase font-semibold">Beneficiaries</span>
+            <span className="text-xl font-extrabold text-eco-blue font-outfit">{m ? m.totalSalesVolumeKg.toLocaleString() : 0}</span>
+            <span className="block text-[10px] text-eco-muted uppercase font-semibold">kg Sold</span>
           </div>
         </div>
       </div>
 
-      {/* 2-COLUMN CHARTS MATRIX */}
+      {/* CHARTS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Chart 1: Sales vs Forecast */}
         <div className="eco-card p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-eco-green" /> Weekly Sales vs AI Demand Forecast
+              <BarChart3 className="w-4 h-4 text-eco-blue" /> Weekly Financial Loss (LKR)
             </h3>
-            <span className="text-xs text-eco-muted">Monthly aggregation</span>
+            <span className="text-xs text-eco-muted">Last 7 weeks</span>
           </div>
-          <SalesForecastChart data={salesVsForecastData} />
+          <WeeklyLossChart data={weeklyLossData} />
         </div>
 
-        {/* Chart 2: Waste Volume by Reason */}
         <div className="eco-card p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-white font-outfit flex items-center gap-2">
@@ -174,12 +160,9 @@ export const ReportsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* MOST WASTED FOOD ITEMS RANKED TABLE */}
+      {/* MOST WASTED FOOD ITEMS */}
       <div className="eco-card p-6">
-        <h3 className="text-base font-bold text-white font-outfit mb-4">
-          Most Wasted Food Items (Ranked)
-        </h3>
-
+        <h3 className="text-base font-bold text-white font-outfit mb-4">Most Wasted Food Items (Ranked)</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -192,31 +175,25 @@ export const ReportsPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-eco-border/40 text-xs">
-              <tr className="hover:bg-eco-surface/40">
-                <td className="py-3.5 px-4 font-extrabold text-eco-danger">#1</td>
-                <td className="py-3.5 px-4 font-bold text-white">Chicken Curry (Prepared)</td>
-                <td className="py-3.5 px-4 text-white">45.0 kg</td>
-                <td className="py-3.5 px-4 font-semibold text-eco-danger">LKR 54,000</td>
-                <td className="py-3.5 px-4 text-eco-muted">Overproduction</td>
-              </tr>
-              <tr className="hover:bg-eco-surface/40">
-                <td className="py-3.5 px-4 font-extrabold text-eco-warning">#2</td>
-                <td className="py-3.5 px-4 font-bold text-white">Penne Pasta (Cooked)</td>
-                <td className="py-3.5 px-4 text-white">32.5 kg</td>
-                <td className="py-3.5 px-4 font-semibold text-eco-danger">LKR 26,000</td>
-                <td className="py-3.5 px-4 text-eco-muted">Spoilage (Expired)</td>
-              </tr>
-              <tr className="hover:bg-eco-surface/40">
-                <td className="py-3.5 px-4 font-extrabold text-eco-blue">#3</td>
-                <td className="py-3.5 px-4 font-bold text-white">Mixed Vegetable Salad</td>
-                <td className="py-3.5 px-4 text-white">28.0 kg</td>
-                <td className="py-3.5 px-4 font-semibold text-eco-danger">LKR 18,200</td>
-                <td className="py-3.5 px-4 text-eco-muted">Preparation Waste</td>
-              </tr>
+              {topItems.map((row, index) => (
+                <tr key={row.foodName} className="hover:bg-eco-surface/40">
+                  <td className="py-3.5 px-4 font-extrabold text-eco-danger">#{index + 1}</td>
+                  <td className="py-3.5 px-4 font-bold text-white">{row.foodName}</td>
+                  <td className="py-3.5 px-4 text-white">{row.quantity} kg</td>
+                  <td className="py-3.5 px-4 font-semibold text-eco-danger">LKR {row.financialLoss.toLocaleString()}</td>
+                  <td className="py-3.5 px-4 text-eco-muted">{row.primaryReason}</td>
+                </tr>
+              ))}
+              {topItems.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="py-6 text-center text-eco-muted">No waste recorded yet.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
+
     </div>
   );
 };

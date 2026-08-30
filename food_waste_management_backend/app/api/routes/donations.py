@@ -38,8 +38,20 @@ async def request_donation(payload: DonationRequestCreate, user: dict = Depends(
 
 @router.get("/requests", response_model=PaginatedResponse)
 async def list_requests(user: dict = Depends(get_current_user), database: AsyncIOMotorDatabase = Depends(get_database)):
-    query = {"charity_id": user["_id"]} if user["role"] == "CHARITY" else {}
-    items = [serialize(item) async for item in database.donation_requests.find(query).sort("created_at", -1).limit(100)]
+    if user["role"] == "CHARITY":
+        query = {"charity_id": user["_id"]}
+    else:
+        owned = [donation["_id"] async for donation in database.donations.find({"donor_id": user["_id"]}, {"_id": 1})]
+        query = {"donation_id": {"$in": owned}}
+    items = []
+    async for item in database.donation_requests.find(query).sort("created_at", -1).limit(100):
+        row = serialize(item)
+        donation = await database.donations.find_one({"_id": row["donation_id"]})
+        if donation:
+            row["requested_food"] = donation.get("food_item_name")
+            row["donor_name"] = donation.get("donor_name")
+            row["pickup_address"] = donation.get("pickup_address")
+        items.append(row)
     return {"items": items, "total": await database.donation_requests.count_documents(query)}
 
 

@@ -14,18 +14,20 @@ export const SalesPage: React.FC = () => {
   const [selectedFoodId, setSelectedFoodId] = useState('');
   const [prepQty, setPrepQty] = useState<number | ''>(20);
   const [soldQty, setSoldQty] = useState<number | ''>(18);
-  const [entryDate, setEntryDate] = useState('2026-07-19');
+  const [entryDate, setEntryDate] = useState(new Date().toISOString().slice(0, 10));
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const refreshLogs = () => salesService.getSalesLogs().then(setSalesLogs).catch(console.error);
 
   useEffect(() => {
     inventoryService.getItems().then((items) => {
       setInventoryItems(items);
       if (items.length > 0) setSelectedFoodId(items[0].id);
     }).catch(console.error);
-    setSalesLogs(salesService.getSalesLogs());
+    refreshLogs();
   }, []);
 
   const selectedItem = inventoryItems.find((i) => i.id === selectedFoodId);
@@ -35,23 +37,25 @@ export const SalesPage: React.FC = () => {
   const sold = Number(soldQty) || 0;
   const potentialWaste = Math.max(0, prep - sold);
 
-  const handleLogSales = (e: React.FormEvent) => {
+  const handleLogSales = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedItem) return;
 
-    const newLog = salesService.logSales({
-      foodItemId: selectedItem.id,
-      foodName: selectedItem.foodName,
-      date: entryDate,
-      quantityPrepared: prep,
-      quantitySold: sold,
-      wasteQuantity: potentialWaste,
-      unit: selectedItem.unit,
-      status: potentialWaste > 0 ? 'Logged' : 'Sold Out',
-    });
-
-    setSalesLogs([newLog, ...salesLogs.filter((s) => s.id !== newLog.id)]);
-    setToastMessage(`Sales entry recorded successfully for ${selectedItem.foodName}.`);
+    try {
+      await salesService.logSales({
+        foodItemId: selectedItem.id,
+        foodName: selectedItem.foodName,
+        date: entryDate,
+        quantityPrepared: prep,
+        quantitySold: sold,
+        wasteQuantity: potentialWaste,
+        unit: selectedItem.unit,
+      });
+      await refreshLogs();
+      setToastMessage(`Sales entry recorded successfully for ${selectedItem.foodName}.`);
+    } catch {
+      setToastMessage('Could not save the sales entry. Please try again.');
+    }
     setTimeout(() => setToastMessage(null), 4000);
   };
 

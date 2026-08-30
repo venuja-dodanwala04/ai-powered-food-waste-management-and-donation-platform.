@@ -17,8 +17,9 @@ export const AddInventoryModal: React.FC<AddInventoryModalProps> = ({
   const [category, setCategory] = useState<FoodCategory>('Prepared Food');
   const [quantity, setQuantity] = useState<number>(10);
   const [unit, setUnit] = useState<'kg' | 'units' | 'liters' | 'packs'>('kg');
-  const [purchaseDate, setPurchaseDate] = useState('2026-07-19');
-  const [expiryDate, setExpiryDate] = useState('2026-07-21');
+  const today = new Date();
+  const [purchaseDate, setPurchaseDate] = useState(today.toISOString().slice(0, 10));
+  const [expiryDate, setExpiryDate] = useState(new Date(today.getTime() + 3 * 864e5).toISOString().slice(0, 10));
   const [storageLocation, setStorageLocation] = useState<StorageLocation>('Refrigerator');
   const [unitCost, setUnitCost] = useState<number>(1000);
 
@@ -29,14 +30,13 @@ export const AddInventoryModal: React.FC<AddInventoryModalProps> = ({
     if (!foodName) return;
 
     await onAdd({
-      userId: 'usr_business_1',
+      userId: '',
       foodName,
       category,
       quantity,
       unit,
       purchaseDate,
       expiryDate,
-      expiryHoursLeft: 48,
       storageLocation,
       status: 'Fresh',
       unitCost,

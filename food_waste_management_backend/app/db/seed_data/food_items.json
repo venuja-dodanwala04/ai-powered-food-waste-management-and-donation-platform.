@@ -1,0 +1,100 @@
+[
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679748"
+  },
+  "food_item_id": "FOOD001",
+  "food_name": "Beef Rendang"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679749"
+  },
+  "food_item_id": "FOOD002",
+  "food_name": "Cendol"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974a"
+  },
+  "food_item_id": "FOOD003",
+  "food_name": "Char Kway Teow"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974b"
+  },
+  "food_item_id": "FOOD004",
+  "food_name": "Chicken Chop"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974c"
+  },
+  "food_item_id": "FOOD005",
+  "food_name": "Chicken Rice"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974d"
+  },
+  "food_item_id": "FOOD006",
+  "food_name": "Iced Lemon Tea"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974e"
+  },
+  "food_item_id": "FOOD007",
+  "food_name": "Kaya Toast Set"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f36167974f"
+  },
+  "food_item_id": "FOOD008",
+  "food_name": "Laksa"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679750"
+  },
+  "food_item_id": "FOOD009",
+  "food_name": "Mushroom Soup"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679751"
+  },
+  "food_item_id": "FOOD010",
+  "food_name": "Nasi Lemak"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679752"
+  },
+  "food_item_id": "FOOD011",
+  "food_name": "Roti Canai"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679753"
+  },
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679754"
+  },
+  "food_item_id": "FOOD013",
+  "food_name": "Tandoori Chicken"
+ },
+ {
+  "_id": {
+   "$oid": "6a6dcfef1821a8f361679755"
+  },
+  "food_item_id": "FOOD014",
+  "food_name": "Teh Tarik"
+ }
+]

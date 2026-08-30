@@ -12,30 +12,31 @@ export const CharityDashboardPage: React.FC = () => {
   const [requests, setRequests] = useState<DonationRequest[]>([]);
   const navigate = useNavigate();
 
+  const refresh = () => {
+    donationService
+      .getDonations()
+      .then((all) => setAvailableDonations(all.filter((d) => d.status === 'Available')))
+      .catch(console.error);
+    donationService.getRequests().then(setRequests).catch(console.error);
+  };
+
   useEffect(() => {
-    setAvailableDonations(
-      donationService.getDonations().filter((d) => d.status === 'Available')
-    );
-    setRequests(donationService.getRequests());
+    refresh();
   }, []);
 
-  const handleRequestClick = (don: Donation) => {
-    donationService.requestDonation({
-      donationId: don.id,
-      charityId: 'usr_charity_1',
-      charityName: 'Hope Food Bank',
-      requestedFood: don.foodItemName,
-      requestedQuantity: don.quantity,
-      unit: don.unit,
-      pickupTime: don.pickupTime,
-      distanceKm: don.distanceKm || 2.4,
-      notes: 'Requesting collection for evening community dinner service.',
-    });
-
-    setAvailableDonations(
-      donationService.getDonations().filter((d) => d.status === 'Available')
-    );
-    setRequests(donationService.getRequests());
+  const handleRequestClick = async (don: Donation) => {
+    try {
+      await donationService.requestDonation({
+        donationId: don.id,
+        requestedQuantity: don.quantity,
+        unit: don.unit,
+        pickupTime: don.pickupTime,
+        notes: 'Requesting collection for evening community dinner service.',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    refresh();
     navigate('/charity/requests');
   };
 

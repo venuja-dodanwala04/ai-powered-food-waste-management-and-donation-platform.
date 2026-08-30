@@ -11,19 +11,23 @@ export const DonationRequestsPage: React.FC = () => {
   const [requests, setRequests] = useState<DonationRequest[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const refresh = () => donationService.getRequests().then(setRequests).catch(console.error);
+
   useEffect(() => {
-    setRequests(donationService.getRequests());
+    refresh();
   }, []);
 
-  const handleUpdateStatus = (id: string, newStatus: 'Accepted' | 'Rejected') => {
-    const updated = donationService.updateRequestStatus(id, newStatus);
-    if (updated) {
-      setRequests(donationService.getRequests());
+  const handleUpdateStatus = async (id: string, newStatus: 'Accepted' | 'Rejected') => {
+    try {
+      const updated = await donationService.updateRequestStatus(id, newStatus);
+      await refresh();
       setToastMessage(
         `Donation request from ${updated.charityName} has been ${newStatus.toLowerCase()}.`
       );
-      setTimeout(() => setToastMessage(null), 4000);
+    } catch {
+      setToastMessage('Could not update the request status.');
     }
+    setTimeout(() => setToastMessage(null), 4000);
   };
 
   const filteredRequests = requests.filter((r) => r.status === activeTab);

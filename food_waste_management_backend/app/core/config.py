@@ -19,6 +19,15 @@ class Settings(BaseSettings):
     def allowed_origins(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
 
+    @property
+    def is_production(self) -> bool:
+        """Only the literal value "production" (any case) disables the dev bootstrap.
+
+        Unset / empty / "development" / "staging" / "local" / anything else all count
+        as non-production and trigger default-account and demo-data seeding on startup.
+        """
+        return self.environment.strip().lower() == "production"
+
 
 @lru_cache
 def get_settings() -> Settings:

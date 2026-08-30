@@ -23,7 +23,7 @@ export const CharityLayout: React.FC = () => {
     }
     setUser(currentUser);
 
-    setUnreadNotifs(notificationService.getUnreadCount());
+    notificationService.getUnreadCount().then(setUnreadNotifs).catch(() => setUnreadNotifs(0));
   }, [location.pathname]);
 
   const handleLogout = () => {

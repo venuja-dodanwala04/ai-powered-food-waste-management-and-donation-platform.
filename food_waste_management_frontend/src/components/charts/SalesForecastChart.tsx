@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 
 interface SalesForecastChartProps {
-  data: Array<{ day: string; actualSales: number; aiPredicted: number }>;
+  data: Array<{ day: string; actualSales: number; aiPredicted?: number }>;
 }
 
 export const SalesForecastChart: React.FC<SalesForecastChartProps> = ({ data }) => {

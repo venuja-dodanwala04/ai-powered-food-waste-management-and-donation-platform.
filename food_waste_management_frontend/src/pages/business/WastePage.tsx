@@ -7,6 +7,7 @@ import { WasteReasonChart } from '../../components/charts/WasteReasonChart';
 import { WeeklyLossChart } from '../../components/charts/WeeklyLossChart';
 import { wasteService } from '../../services/wasteService';
 import { inventoryService } from '../../services/inventoryService';
+import { reportsService, ReportSummary, DashboardSummary } from '../../services/reportsService';
 import { WasteEntry, WasteReason, FoodItem } from '../../types';
 
 export const WastePage: React.FC = () => {
@@ -18,8 +19,20 @@ export const WastePage: React.FC = () => {
   const [selectedFoodId, setSelectedFoodId] = useState('');
   const [discardQty, setDiscardQty] = useState<number | ''>(state?.prefillQty || 8.4);
   const [reason, setReason] = useState<WasteReason>('Spoilage / Expired');
-  const [incidentDate, setIncidentDate] = useState('2026-07-19');
+  const [incidentDate, setIncidentDate] = useState(new Date().toISOString().slice(0, 10));
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [reasonChartData, setReasonChartData] = useState<Array<{ name: string; value: number; color: string }>>([]);
+  const [weeklyLossData, setWeeklyLossData] = useState<Array<{ day: string; loss: number }>>([]);
+  const [summary, setSummary] = useState<ReportSummary | null>(null);
+  const [dash, setDash] = useState<DashboardSummary | null>(null);
+
+  const refreshLogs = () => wasteService.getWasteLogs().then(setWasteLogs).catch(console.error);
+  const refreshAnalytics = () => {
+    wasteService.getReasonsChartData().then(setReasonChartData).catch(console.error);
+    wasteService.getWeeklyLossChartData().then(setWeeklyLossData).catch(console.error);
+    reportsService.getSummaryMetrics('30 Days').then(setSummary).catch(console.error);
+    reportsService.getDashboardMetrics().then(setDash).catch(console.error);
+  };
 
   useEffect(() => {
     inventoryService.getItems().then((items) => {
@@ -30,34 +43,37 @@ export const WastePage: React.FC = () => {
         setSelectedFoodId(found?.id ?? items[0].id);
       }
     }).catch(console.error);
-    setWasteLogs(wasteService.getWasteLogs());
+    refreshLogs();
+    refreshAnalytics();
   }, [state]);
 
   const selectedItem = inventoryItems.find((i) => i.id === selectedFoodId);
   const qty = Number(discardQty) || 0;
   const estimatedLossLKR = selectedItem ? qty * selectedItem.unitCost : qty * 1000;
 
-  const handleLogWaste = (e: React.FormEvent) => {
+  const handleLogWaste = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedItem) return;
 
-    const newLog = wasteService.logWaste({
-      userId: 'usr_business_1',
-      foodItemId: selectedItem.id,
-      foodName: selectedItem.foodName,
-      quantity: qty,
-      unit: selectedItem.unit,
-      reason,
-      financialLoss: estimatedLossLKR,
-    });
-
-    setWasteLogs([newLog, ...wasteLogs]);
-    setToastMessage(`Waste event logged: ${qty} kg ${selectedItem.foodName} (LKR ${estimatedLossLKR.toLocaleString()}).`);
+    try {
+      await wasteService.logWaste({
+        userId: '',
+        foodItemId: selectedItem.id,
+        foodName: selectedItem.foodName,
+        quantity: qty,
+        unit: selectedItem.unit,
+        reason,
+        financialLoss: estimatedLossLKR,
+        date: incidentDate,
+      });
+      await refreshLogs();
+      refreshAnalytics();
+      setToastMessage(`Waste event logged: ${qty} kg ${selectedItem.foodName} (LKR ${estimatedLossLKR.toLocaleString()}).`);
+    } catch {
+      setToastMessage('Could not log the waste event. Please try again.');
+    }
     setTimeout(() => setToastMessage(null), 4000);
   };
-
-  const reasonChartData = wasteService.getReasonsChartData();
-  const weeklyLossData = wasteService.getWeeklyLossChartData();
 
   return (
     <div className="space-y-6">
@@ -76,17 +92,17 @@ export const WastePage: React.FC = () => {
       {/* TOP CARDS matching supplied Food Waste Tracking UI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
-          title="Total Food Wasted Today"
-          value="8.4 kg"
-          trend="12% vs Yesterday"
-          trendDirection="down"
+          title="Food Wasted Today"
+          value={`${dash ? dash.todayWasteKg : 0} kg`}
+          trend={summary ? `${summary.totalWasteKg} kg over 30 days` : '—'}
+          trendDirection="neutral"
           subtitle="Spoilage & overprep"
           icon={Trash2}
           accentColor="danger"
         />
         <StatCard
-          title="Financial Loss Today"
-          value="LKR 8,400"
+          title="Financial Loss (30 days)"
+          value={`LKR ${(summary ? summary.financialLossLKR : 0).toLocaleString()}`}
           trend="Based on unit cost valuation"
           trendDirection="neutral"
           subtitle="Calculated in Sri Lankan Rupees"
@@ -95,10 +111,10 @@ export const WastePage: React.FC = () => {
         />
         <StatCard
           title="Primary Waste Reason"
-          value="Spoilage (Expired)"
-          trend="55.4% of total waste volume"
+          value={reasonChartData[0]?.name ?? '—'}
+          trend={reasonChartData[0] ? `${reasonChartData[0].value}% of total waste volume` : '—'}
           trendDirection="neutral"
-          subtitle="Critical shelf-life exceed"
+          subtitle="Highest-volume cause"
           icon={AlertTriangle}
           accentColor="purple"
         />

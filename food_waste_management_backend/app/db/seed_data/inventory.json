@@ -1,0 +1,156 @@
+[
+ {
+  "food_item_id": "FOOD001",
+  "food_name": "Beef Rendang",
+  "category": "Prepared Food",
+  "quantity": 83.3,
+  "unit": "kg",
+  "unit_cost": 331,
+  "storage_location": "Refrigerator",
+  "purchase_days_ago": 0,
+  "shelf_life_days": 1
+ },
+ {
+  "food_item_id": "FOOD002",
+  "food_name": "Cendol",
+  "category": "Beverages",
+  "quantity": 170.7,
+  "unit": "kg",
+  "unit_cost": 210,
+  "storage_location": "Refrigerator",
+  "purchase_days_ago": 0,
+  "shelf_life_days": 2
+ },
+ {
+  "food_item_id": "FOOD003",
+  "food_name": "Char Kway Teow",
+  "category": "Prepared Food",
+  "quantity": 221.5,
+  "unit": "kg",
+  "unit_cost": 261,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 2,
+  "shelf_life_days": 3
+ },
+ {
+  "food_item_id": "FOOD004",
+  "food_name": "Chicken Chop",
+  "category": "Prepared Food",
+  "quantity": 172.0,
+  "unit": "kg",
+  "unit_cost": 166,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 2,
+  "shelf_life_days": 14
+ },
+ {
+  "food_item_id": "FOOD005",
+  "food_name": "Chicken Rice",
+  "category": "Rice & Grains",
+  "quantity": 293.5,
+  "unit": "kg",
+  "unit_cost": 526,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 1,
+  "shelf_life_days": 10
+ },
+ {
+  "food_item_id": "FOOD006",
+  "food_name": "Iced Lemon Tea",
+  "category": "Beverages",
+  "quantity": 193.2,
+  "unit": "kg",
+  "unit_cost": 905,
+  "storage_location": "Refrigerator",
+  "purchase_days_ago": 1,
+  "shelf_life_days": 7
+ },
+ {
+  "food_item_id": "FOOD007",
+  "food_name": "Kaya Toast Set",
+  "category": "Bakery",
+  "quantity": 225.6,
+  "unit": "kg",
+  "unit_cost": 906,
+  "storage_location": "Dry Storage",
+  "purchase_days_ago": 1,
+  "shelf_life_days": 7
+ },
+ {
+  "food_item_id": "FOOD008",
+  "food_name": "Laksa",
+  "category": "Prepared Food",
+  "quantity": 107.9,
+  "unit": "kg",
+  "unit_cost": 641,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 0,
+  "shelf_life_days": 7
+ },
+ {
+  "food_item_id": "FOOD009",
+  "food_name": "Mushroom Soup",
+  "category": "Prepared Food",
+  "quantity": 139.1,
+  "unit": "kg",
+  "unit_cost": 902,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 2,
+  "shelf_life_days": 10
+ },
+ {
+  "food_item_id": "FOOD010",
+  "food_name": "Nasi Lemak",
+  "category": "Rice & Grains",
+  "quantity": 328.6,
+  "unit": "kg",
+  "unit_cost": 489,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 2,
+  "shelf_life_days": 4
+ },
+ {
+  "food_item_id": "FOOD011",
+  "food_name": "Roti Canai",
+  "category": "Bakery",
+  "quantity": 319.9,
+  "unit": "kg",
+  "unit_cost": 310,
+  "storage_location": "Dry Storage",
+  "purchase_days_ago": 0,
+  "shelf_life_days": 6
+ },
+ {
+  "food_item_id": "FOOD012",
+  "food_name": "Spaghetti Carbonara",
+  "category": "Prepared Food",
+  "quantity": 75.8,
+  "unit": "kg",
+  "unit_cost": 590,
+  "storage_location": "Prepared Food Area",
+  "purchase_days_ago": 3,
+  "shelf_life_days": 14
+ },
+ {
+  "food_item_id": "FOOD013",
+  "food_name": "Tandoori Chicken",
+  "category": "Prepared Food",
+  "quantity": 85.0,
+  "unit": "kg",
+  "unit_cost": 598,
+  "storage_location": "Refrigerator",
+  "purchase_days_ago": 1,
+  "shelf_life_days": 7
+ },
+ {
+  "food_item_id": "FOOD014",
+  "food_name": "Teh Tarik",
+  "category": "Beverages",
+  "quantity": 310.9,
+  "unit": "kg",
+  "unit_cost": 811,
+  "storage_location": "Refrigerator",
+  "purchase_days_ago": 2,
+  "shelf_life_days": 7
+ }
+]

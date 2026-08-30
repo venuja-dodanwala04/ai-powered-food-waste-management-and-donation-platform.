@@ -11,18 +11,20 @@ export const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const navigate = useNavigate();
 
+  const refresh = () => notificationService.getNotifications().then(setNotifications).catch(console.error);
+
   useEffect(() => {
-    setNotifications(notificationService.getNotifications());
+    refresh();
   }, []);
 
-  const handleMarkAsRead = (id: string) => {
-    notificationService.markAsRead(id);
-    setNotifications(notificationService.getNotifications());
+  const handleMarkAsRead = async (id: string) => {
+    await notificationService.markAsRead(id).catch(console.error);
+    refresh();
   };
 
-  const handleMarkAllRead = () => {
-    notificationService.markAllAsRead();
-    setNotifications(notificationService.getNotifications());
+  const handleMarkAllRead = async () => {
+    await notificationService.markAllAsRead().catch(console.error);
+    refresh();
   };
 
   const filtered = notifications.filter((n) => {

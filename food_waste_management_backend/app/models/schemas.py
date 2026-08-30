@@ -4,6 +4,10 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
+# Alias so models can have a field literally named ``date`` (which shadows the
+# imported type inside the class body) while still typing other date fields.
+DateType = date
+
 
 class APIModel(BaseModel):
     model_config = ConfigDict(populate_by_name=True, from_attributes=True)
@@ -67,6 +71,15 @@ class SalesCreate(APIModel):
     quantity_sold: float = Field(ge=0)
     waste_quantity: float = Field(default=0, ge=0)
     unit: str
+    # Optional demand-driver signals. Nullable now so the write path is stable
+    # once the LSTM forecaster starts consuming them (see missingdata.md).
+    unit_price: float | None = Field(default=None, ge=0)
+    promotion: bool = False
+    customer_count: int | None = Field(default=None, ge=0)
+    meal_period: str | None = None
+    weather: str | None = None
+    temperature_c: float | None = None
+    is_holiday: bool | None = None
 
 
 class WasteCreate(APIModel):
@@ -76,6 +89,8 @@ class WasteCreate(APIModel):
     unit: str
     reason: str
     financial_loss: float = Field(ge=0)
+    date: DateType | None = None
+    waste_stage: str | None = None
 
 
 class ForecastRequest(APIModel):

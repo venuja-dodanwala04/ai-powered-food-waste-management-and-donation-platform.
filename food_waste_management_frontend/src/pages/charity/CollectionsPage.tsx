@@ -9,18 +9,24 @@ export const CollectionsPage: React.FC = () => {
   const [collections, setCollections] = useState<DonationRequest[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const refresh = () =>
+    donationService
+      .getRequests()
+      .then((all) => setCollections(all.filter((r) => r.status === 'Accepted' || r.status === 'Collected')))
+      .catch(console.error);
+
   useEffect(() => {
-    setCollections(
-      donationService.getRequests().filter((r) => r.status === 'Accepted' || r.status === 'Collected')
-    );
+    refresh();
   }, []);
 
-  const handleConfirmCollection = (id: string) => {
-    donationService.updateRequestStatus(id, 'Collected');
-    setCollections(
-      donationService.getRequests().filter((r) => r.status === 'Accepted' || r.status === 'Collected')
-    );
-    setToastMessage('Food collection confirmed successfully! Impact metrics updated.');
+  const handleConfirmCollection = async (id: string) => {
+    try {
+      await donationService.updateRequestStatus(id, 'Collected');
+      await refresh();
+      setToastMessage('Food collection confirmed successfully! Impact metrics updated.');
+    } catch {
+      setToastMessage('Could not confirm the collection.');
+    }
     setTimeout(() => setToastMessage(null), 4000);
   };
 

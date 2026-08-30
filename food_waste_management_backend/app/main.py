@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.router import api_router
 from app.core.config import get_settings
 from app.db.mongodb import mongodb
+from app.db.seed import bootstrap_dev_environment
 
 
 @asynccontextmanager
@@ -15,7 +16,21 @@ async def lifespan(_: FastAPI):
     await database.users.create_index("email", unique=True)
     await database.inventory.create_index([("user_id", 1), ("expiry_date", 1)])
     await database.sales.create_index([("user_id", 1), ("food_name", 1), ("date", -1)])
+    try:
+        await database.sales.create_index(
+            [("user_id", 1), ("food_item_id", 1), ("date", 1)],
+            unique=True,
+            name="sales_daily_series",
+            partialFilterExpression={"food_item_id": {"$type": "string"}},
+        )
+    except Exception:  # pre-existing non-conforming sales data — keep the series index best-effort
+        await database.sales.create_index(
+            [("user_id", 1), ("food_item_id", 1), ("date", 1)], name="sales_daily_series_nonunique"
+        )
+    await database.waste.create_index([("user_id", 1), ("date", -1)])
     await database.donations.create_index([("status", 1), ("created_at", -1)])
+    if not get_settings().is_production:
+        await bootstrap_dev_environment(database)
     yield
     await mongodb.close()
 

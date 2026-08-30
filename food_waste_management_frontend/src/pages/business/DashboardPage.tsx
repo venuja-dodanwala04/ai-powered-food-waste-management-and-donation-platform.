@@ -15,21 +15,26 @@ import { PageHeader } from '../../components/common/PageHeader';
 import { StatCard } from '../../components/common/StatCard';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { SalesForecastChart } from '../../components/charts/SalesForecastChart';
-import { forecastService } from '../../services/forecastService';
 import { inventoryService } from '../../services/inventoryService';
+import { salesService } from '../../services/salesService';
+import { reportsService, DashboardSummary } from '../../services/reportsService';
 import { FoodItem } from '../../types';
 
 export const DashboardPage: React.FC = () => {
   const [criticalExpiries, setCriticalExpiries] = useState<FoodItem[]>([]);
+  const [chartData, setChartData] = useState<Array<{ day: string; actualSales: number }>>([]);
+  const [metrics, setMetrics] = useState<DashboardSummary | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     inventoryService.getItems().then((items) => {
-      setCriticalExpiries(items.filter((item) => item.status === 'Critical Expiry' || (item.expiryHoursLeft && item.expiryHoursLeft <= 8)));
+      setCriticalExpiries(items.filter((item) => item.status === 'Critical Expiry' || item.status === 'Expired'));
     }).catch(console.error);
+    salesService.getWeeklySales(21)
+      .then((rows) => setChartData(rows.map((r) => ({ day: r.date.slice(5), actualSales: r.sold }))))
+      .catch(console.error);
+    reportsService.getDashboardMetrics().then(setMetrics).catch(console.error);
   }, []);
-
-  const chartData = forecastService.getChartData();
 
   return (
     <div className="space-y-6">
@@ -52,9 +57,9 @@ export const DashboardPage: React.FC = () => {
         {/* Stat 1: Today's Sales */}
         <StatCard
           title="Today's Sales"
-          value="184 Kg"
-          trend="+12% vs Yesterday"
-          trendDirection="up"
+          value={`${metrics ? metrics.todaySalesKg : 0} Kg`}
+          trend={metrics ? `${metrics.salesDeltaPercent >= 0 ? '+' : ''}${metrics.salesDeltaPercent}% vs Yesterday` : '—'}
+          trendDirection={metrics && metrics.salesDeltaPercent < 0 ? 'down' : 'up'}
           subtitle="Revenue & Volume target"
           icon={TrendingUp}
           accentColor="green"
@@ -63,10 +68,10 @@ export const DashboardPage: React.FC = () => {
         {/* Stat 2: Food Waste */}
         <StatCard
           title="Food Waste"
-          value="8.4 Kg"
-          trend="-12% vs Yesterday"
-          trendDirection="down"
-          subtitle="Spoilage & excess prep"
+          value={`${metrics ? metrics.todayWasteKg : 0} Kg`}
+          trend="Spoilage & excess prep"
+          trendDirection="neutral"
+          subtitle="Logged today"
           icon={Trash2}
           accentColor="danger"
         />
@@ -74,8 +79,8 @@ export const DashboardPage: React.FC = () => {
         {/* Stat 3: Donation Summary */}
         <StatCard
           title="Donation Summary"
-          value="20.0 Kg"
-          trend="3 active collections today"
+          value={`${metrics ? metrics.donatedTodayKg : 0} Kg`}
+          trend={metrics ? `${metrics.activeCollections} active collections` : '—'}
           trendDirection="neutral"
           subtitle="Surplus rescued"
           icon={Gift}
@@ -85,10 +90,10 @@ export const DashboardPage: React.FC = () => {
         {/* Stat 4: AI Forecast Accuracy */}
         <StatCard
           title="AI Forecast Accuracy"
-          value="94.8%"
-          trend="Stable recommendation pool"
-          trendDirection="up"
-          subtitle="MAE: 1.2 kg"
+          value="—"
+          trend="Coming soon"
+          trendDirection="neutral"
+          subtitle="Model not deployed yet"
           icon={BrainCircuit}
           accentColor="blue"
         />
@@ -101,10 +106,10 @@ export const DashboardPage: React.FC = () => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-bold text-white font-outfit">
-                Sales vs. AI Demand Prediction
+                Daily Sales (last 3 weeks)
               </h2>
               <p className="text-xs text-eco-muted mt-0.5">
-                Comparing actual daily sales against AI machine learning model prep advice.
+                Actual daily sales volume. AI demand prediction overlay coming soon.
               </p>
             </div>
             <button
@@ -152,10 +157,10 @@ export const DashboardPage: React.FC = () => {
                       <span className="text-xs font-bold text-white truncate max-w-[140px]">
                         {item.foodName}
                       </span>
-                      <StatusBadge status="Critical Expiry" size="sm" />
+                      <StatusBadge status={item.status} size="sm" />
                     </div>
                     <p className="text-xs text-eco-danger font-semibold">
-                      Expires in {item.expiryHoursLeft} hours | {item.quantity} {item.unit}
+                      Expires {item.expiryDate} | {item.quantity} {item.unit}
                     </p>
                   </div>
                   <button

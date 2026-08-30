@@ -13,42 +13,43 @@ export const DonationsPage: React.FC = () => {
 
   const [inventoryItems, setInventoryItems] = useState<FoodItem[]>([]);
   const [donations, setDonations] = useState<Donation[]>([]);
-  const [selectedFoodName, setSelectedFoodName] = useState(state?.prefillItem || 'Chicken Curry & Steamed Rice');
+  const [selectedFoodName, setSelectedFoodName] = useState(state?.prefillItem || '');
   const [quantity, setQuantity] = useState<number | ''>(state?.prefillQty || 15);
   const [unit, setUnit] = useState('kg');
   const [pickupTime, setPickupTime] = useState('19:00 - 20:00');
-  const [pickupDate, setPickupDate] = useState('2026-07-19');
+  const [pickupDate, setPickupDate] = useState(new Date().toISOString().slice(0, 10));
   const [pickupAddress, setPickupAddress] = useState('Grand Colombo Main Kitchen, Colombo 03');
   const [notes, setNotes] = useState('Freshly prepared evening batch. Refrigeration available upon request.');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  const refresh = () => donationService.getDonations(true).then(setDonations).catch(console.error);
+
   useEffect(() => {
     inventoryService.getItems().then(setInventoryItems).catch(console.error);
-    setDonations(donationService.getDonations());
+    refresh();
   }, []);
 
-  const handlePostSurplus = (e: React.FormEvent) => {
+  const handlePostSurplus = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedFoodName) return;
 
-    const newDonation = donationService.createDonation({
-      donorId: 'usr_business_1',
-      donorName: 'Grand Colombo',
-      donorAddress: 'Galle Face Terrace, Colombo 03',
-      donorPhone: '+94 11 234 5678',
-      foodItemName: selectedFoodName,
-      category: 'Prepared Food',
-      quantity: Number(quantity) || 10,
-      unit,
-      pickupAddress,
-      pickupTime,
-      pickupDate,
-      expiryTime: `${pickupDate} 22:00`,
-      distanceKm: 2.4,
-    });
-
-    setDonations([newDonation, ...donations]);
-    setToastMessage(`Surplus food posted successfully for donation! (${selectedFoodName})`);
+    try {
+      await donationService.createDonation({
+        foodItemName: selectedFoodName,
+        category: 'Prepared Food',
+        quantity: Number(quantity) || 10,
+        unit,
+        pickupAddress,
+        pickupDate,
+        pickupTime,
+        expiryTime: new Date(`${pickupDate}T22:00:00`).toISOString(),
+        isPrepared: true,
+      });
+      await refresh();
+      setToastMessage(`Surplus food posted successfully for donation! (${selectedFoodName})`);
+    } catch {
+      setToastMessage('Could not post the surplus food. Please try again.');
+    }
     setTimeout(() => setToastMessage(null), 4000);
   };
 

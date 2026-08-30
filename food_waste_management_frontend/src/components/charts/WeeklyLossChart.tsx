@@ -35,7 +35,7 @@ export const WeeklyLossChart: React.FC<WeeklyLossChartProps> = ({ data }) => {
               color: '#FFF',
               fontSize: '12px',
             }}
-            formatter={(val: number) => [`LKR ${val.toLocaleString()}`, 'Financial Loss']}
+            formatter={(val: any) => [`LKR ${Number(val).toLocaleString()}`, 'Financial Loss']}
           />
           <Bar dataKey="loss" radius={[6, 6, 0, 0]}>
             {data.map((_, index) => (

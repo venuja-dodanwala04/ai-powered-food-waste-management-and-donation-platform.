@@ -1,0 +1,66 @@
+[
+ {
+  "title": "Critical expiry",
+  "message": "Beef Rendang expires within 24 hours.",
+  "type": "EXPIRY",
+  "is_read": false,
+  "action_url": "/business/expiry",
+  "days_ago": 0
+ },
+ {
+  "title": "Critical expiry",
+  "message": "Cendol expires within 48 hours.",
+  "type": "EXPIRY",
+  "is_read": false,
+  "action_url": "/business/expiry",
+  "days_ago": 0
+ },
+ {
+  "title": "Surplus detected",
+  "message": "Roti Canai prep exceeded sales by 12 kg today.",
+  "type": "SYSTEM",
+  "is_read": false,
+  "action_url": "/business/waste",
+  "days_ago": 0
+ },
+ {
+  "title": "Donation reserved",
+  "message": "A charity reserved 5.0 kg of Laksa.",
+  "type": "DONATION_REQUEST",
+  "is_read": false,
+  "action_url": "/business/donation-requests",
+  "days_ago": 1
+ },
+ {
+  "title": "Donation collected",
+  "message": "3.0 kg of Beef Rendang was collected.",
+  "type": "DONATION_REQUEST",
+  "is_read": true,
+  "action_url": "/business/donation-requests",
+  "days_ago": 1
+ },
+ {
+  "title": "Weekly report ready",
+  "message": "Your food-waste report for last week is available.",
+  "type": "SYSTEM",
+  "is_read": true,
+  "action_url": "/business/reports",
+  "days_ago": 2
+ },
+ {
+  "title": "Donation request",
+  "message": "New request for Char Kway Teow (7.5 kg).",
+  "type": "DONATION_REQUEST",
+  "is_read": true,
+  "action_url": "/business/donation-requests",
+  "days_ago": 3
+ },
+ {
+  "title": "Low stock",
+  "message": "Chicken Chop stock is below one day of demand.",
+  "type": "SYSTEM",
+  "is_read": true,
+  "action_url": "/business/inventory",
+  "days_ago": 4
+ }
+]

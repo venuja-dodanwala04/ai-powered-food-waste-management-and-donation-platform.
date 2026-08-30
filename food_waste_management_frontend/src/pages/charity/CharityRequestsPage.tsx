@@ -11,7 +11,7 @@ export const CharityRequestsPage: React.FC = () => {
   const [requests, setRequests] = useState<DonationRequest[]>([]);
 
   useEffect(() => {
-    setRequests(donationService.getRequests());
+    donationService.getRequests().then(setRequests).catch(console.error);
   }, []);
 
   const filtered = requests.filter((r) => r.status === activeTab);

@@ -31,7 +31,7 @@ export const WasteReasonChart: React.FC<WasteReasonChartProps> = ({ data }) => {
               color: '#FFF',
               fontSize: '12px',
             }}
-            formatter={(val: number) => [`${val}%`, 'Share']}
+            formatter={(val: any) => [`${val}%`, 'Share']}
           />
           <Legend
             layout="horizontal"

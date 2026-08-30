@@ -1,0 +1,34 @@
+[
+ {
+  "donation_index": 4,
+  "requested_quantity": 5.0,
+  "unit": "kg",
+  "pickup_time": "18:00-20:00",
+  "notes": "Can collect with refrigerated van.",
+  "status": "Pending"
+ },
+ {
+  "donation_index": 5,
+  "requested_quantity": 7.5,
+  "unit": "kg",
+  "pickup_time": "18:30-19:30",
+  "notes": "Serving evening meal program.",
+  "status": "Accepted"
+ },
+ {
+  "donation_index": 6,
+  "requested_quantity": 3.0,
+  "unit": "kg",
+  "pickup_time": "12:00-13:00",
+  "notes": "",
+  "status": "Collected"
+ },
+ {
+  "donation_index": 7,
+  "requested_quantity": 9.0,
+  "unit": "kg",
+  "pickup_time": "11:00-12:00",
+  "notes": "Weekly pickup.",
+  "status": "Collected"
+ }
+]

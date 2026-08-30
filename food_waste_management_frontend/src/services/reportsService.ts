@@ -1,33 +1,61 @@
+import { apiRequest } from './apiClient';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000/api/v1';
+
+export interface ReportSummary {
+  rangeDays: number;
+  totalSalesVolumeKg: number;
+  totalPreparedKg: number;
+  totalWasteKg: number;
+  financialLossLKR: number;
+  wasteReductionPercent: number;
+  foodDonatedKg: number;
+  estimatedFinancialSavingsLKR: number;
+  co2SavedKg: number;
+  mealsDonated: number;
+  donationBeneficiaries: number;
+}
+
+export interface DashboardSummary {
+  todaySalesKg: number;
+  todayWasteKg: number;
+  salesDeltaPercent: number;
+  donatedTodayKg: number;
+  activeCollections: number;
+}
+
+const RANGE_DAYS: Record<string, number> = {
+  Today: 7,
+  '7 Days': 7,
+  '30 Days': 30,
+  '3 Months': 90,
+};
+
 class ReportsService {
-  getSummaryMetrics(range: string = '30 Days') {
-    return {
-      totalSalesVolumeKg: 4850,
-      totalWasteKg: 184.2,
-      wasteReductionPercent: 24.8,
-      foodDonatedKg: 420.0,
-      estimatedFinancialSavingsLKR: 345000,
-      co2SavedKg: 1050,
-      mealsDonated: 1260,
-      donationBeneficiaries: 840,
-    };
+  async getSummaryMetrics(range = '30 Days'): Promise<ReportSummary> {
+    const days = RANGE_DAYS[range] ?? 30;
+    return apiRequest<ReportSummary>(`/reports/summary?rangeDays=${days}`);
   }
 
-  exportCSVReport() {
-    const csvContent =
-      'Date,Category,Item,Quantity(kg),Status,FinancialLoss(LKR)\n' +
-      '2026-07-19,Prepared Food,Chicken Curry,3.5,Wasted,4200\n' +
-      '2026-07-19,Vegetables,Mixed Salad,6.5,Donated,0\n' +
-      '2026-07-18,Bakery,Bread Breads,10.0,Donated,0\n' +
-      '2026-07-18,Prepared Food,Penne Pasta,3.0,Wasted,2400\n';
+  async getDashboardMetrics(): Promise<DashboardSummary> {
+    return apiRequest<DashboardSummary>('/reports/dashboard');
+  }
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  async exportCSVReport(): Promise<void> {
+    const token = localStorage.getItem('ecokitchen_token');
+    const response = await fetch(`${API_BASE_URL}/reports/export.csv`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    if (!response.ok) throw new Error('Could not export the report.');
+    const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `EcoKitchen_AI_Report_${Date.now()}.csv`);
+    link.href = url;
+    link.download = `EcoKitchen_Report_${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
 }
 

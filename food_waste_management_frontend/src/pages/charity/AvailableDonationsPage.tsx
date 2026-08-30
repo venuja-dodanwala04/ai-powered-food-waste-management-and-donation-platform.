@@ -18,28 +18,33 @@ export const AvailableDonationsPage: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const refresh = () =>
+    donationService
+      .getDonations()
+      .then((all) => setDonations(all.filter((d) => d.status === 'Available')))
+      .catch(console.error);
+
   useEffect(() => {
-    setDonations(donationService.getDonations().filter((d) => d.status === 'Available'));
+    refresh();
   }, []);
 
-  const handleConfirmRequest = () => {
+  const handleConfirmRequest = async () => {
     if (!selectedDonation) return;
 
-    donationService.requestDonation({
-      donationId: selectedDonation.id,
-      charityId: 'usr_charity_1',
-      charityName: 'Hope Food Bank',
-      requestedFood: selectedDonation.foodItemName,
-      requestedQuantity: selectedDonation.quantity,
-      unit: selectedDonation.unit,
-      pickupTime: selectedDonation.pickupTime,
-      distanceKm: selectedDonation.distanceKm || 2.4,
-      notes: requestNotes || 'Pickup requested for community food bank distribution.',
-    });
-
-    setToastMessage(`Donation request submitted for ${selectedDonation.foodItemName}!`);
+    try {
+      await donationService.requestDonation({
+        donationId: selectedDonation.id,
+        requestedQuantity: selectedDonation.quantity,
+        unit: selectedDonation.unit,
+        pickupTime: selectedDonation.pickupTime,
+        notes: requestNotes || 'Pickup requested for community food bank distribution.',
+      });
+      setToastMessage(`Donation request submitted for ${selectedDonation.foodItemName}!`);
+      await refresh();
+    } catch {
+      setToastMessage('Could not submit the donation request.');
+    }
     setSelectedDonation(null);
-    setDonations(donationService.getDonations().filter((d) => d.status === 'Available'));
     setTimeout(() => setToastMessage(null), 4000);
   };
 

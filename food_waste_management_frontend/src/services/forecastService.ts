@@ -1,25 +1,26 @@
 import { Prediction } from '../types';
-import { MOCK_FORECAST, MOCK_FORECAST_CHART_DATA } from '../data/mockForecast';
+import { ApiError, apiRequest } from './apiClient';
 
+export interface ForecastResult {
+  notImplemented: boolean;
+  predictions: Prediction[];
+}
+
+/**
+ * AI demand forecasting is not implemented yet — the backend returns HTTP 501.
+ * The UI uses `notImplemented` to show a "coming soon" panel instead of an error.
+ */
 class ForecastService {
-  private predictions: Prediction[] = [...MOCK_FORECAST];
-
-  getPredictions(): Prediction[] {
-    return [...this.predictions];
-  }
-
-  getChartData() {
-    return MOCK_FORECAST_CHART_DATA;
-  }
-
-  getAccuracyMetrics() {
-    return {
-      accuracyPercent: 94.8,
-      maeKg: 1.2,
-      f1Score: 0.96,
-      precisionLabel: 'High Precision',
-      recommendationPoolState: 'Stable recommendation pool',
-    };
+  async getForecast(): Promise<ForecastResult> {
+    try {
+      const res = await apiRequest<{ items: Prediction[] }>('/forecasts');
+      return { notImplemented: false, predictions: res.items ?? [] };
+    } catch (error) {
+      if (error instanceof ApiError && (error.status === 501 || error.status === 404)) {
+        return { notImplemented: true, predictions: [] };
+      }
+      throw error;
+    }
   }
 }
 
